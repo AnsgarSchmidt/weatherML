@@ -1,8 +1,6 @@
-#include <FS.h> 
 #include <ESP8266WebServer.h>
 #include <ESP8266WiFi.h>
 #include <WiFiManager.h>
-#include <ArduinoJson.h>
 #include <WiFiClient.h>
 #include <DHT.h>
 
@@ -16,44 +14,8 @@
 WiFiClient wifiClient;                   // Wireless network
 DHT        dht(DHTPIN, DHTTYPE);         // DHT Temperature and Humidity Sensor
 uint8_t    connection_error_counter = 0;
-char       wuid_d[40];
-char       wupasswd_d[40];
-
 
 void setup() {
-  Serial.begin(9600);
-  if (SPIFFS.begin()) {
-    Serial.println("mounted file system");
-    if (SPIFFS.exists("/config.json")) {
-      Serial.println("reading config file");
-      File configFile = SPIFFS.open("/config.json", "r");
-      if (configFile) {
-        Serial.println("opened config file");
-        size_t size = configFile.size();
-        std::unique_ptr<char[]> buf(new char[size]);
-        configFile.readBytes(buf.get(), size);
-        DynamicJsonBuffer jsonBuffer;
-        JsonObject& json = jsonBuffer.parseObject(buf.get());
-        json.printTo(Serial);
-        if (json.success()) {
-          Serial.println("\nparsed json");
-
-          strcpy(mqtt_server, json["mqtt_server"]);
-          strcpy(mqtt_port, json["mqtt_port"]);
-          strcpy(blynk_token, json["blynk_token"]);
-
-        } else {
-          Serial.println("failed to load json config");
-        }
-        configFile.close();
-      }
-    }
-  } else {
-    Serial.println("failed to mount FS");
-  }
-  //end read
-
-
 
   WiFiManager wifiManager;
   //wifiManager.resetSettings();              // for debugging, this resets the configuration and forces the wifimanager to ask for the wifi network
