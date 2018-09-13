@@ -10,8 +10,8 @@
 #define DHTPIN                           4 // DHT sensor data pin see pinout https://pradeepsinghblog.files.wordpress.com/2016/04/nodemcu_pins.png?w=616
 #define DHTTYPE                      DHT22 // which DHT model we use 22
 #define WAIT_UNTIL_NEW_PACKAGE 10 * SECOND // How long we wait to send a new data package 
-#define WUID                 "IBERLIN1817"
-#define WUPASS                  "xbi8g6f6"
+#define WUID                 ""
+#define WUPASS                  ""
 
 WiFiClient wifiClient;                   // Wireless network
 DHT        dht(DHTPIN, DHTTYPE);         // DHT Temperature and Humidity Sensor
